@@ -1,8 +1,8 @@
- function TaskItem({taskName}) {
+ function TaskItem({taskName, deleteTask}) {
   return (
     <li>
       <span> {taskName} </span> 
-      <button> delete task </button>
+      <button onClick={deleteTask}> delete task </button>
     </li>
   )
 }

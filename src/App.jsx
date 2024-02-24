@@ -7,14 +7,20 @@ function App() {
   const inputRef = useRef(null);
   const [tasksList, setTasksList] = useState([]);
 
-  let taskKey = 0;
+  let taskKey = useRef(0);
 
   function handleCreateTask() {
     const taskInput = inputRef.current.value;
 
     // create new TaskItem then push into tasksList 
-    setTasksList([...tasksList, {key:taskKey++, name:taskInput}])
+    setTasksList([...tasksList, {key:taskKey.current++, name:taskInput}])
     inputRef.current.value = "";
+  }
+
+  function handleDeleteTask(currentKey) {
+    setTasksList(
+      tasksList.filter(task => task.key !== currentKey)
+    );
   }
 
   return (
@@ -27,7 +33,7 @@ function App() {
       <ul>
        {/* render each taskitem using state */} 
         {tasksList.map(task => (
-          <TaskItem key={task.key} taskName={task.name} />
+          <TaskItem key={task.key} deleteTask={() => {handleDeleteTask(task.key)}} taskName={task.name + "->" + task.key} />
         ))}
       </ul>
     </>
